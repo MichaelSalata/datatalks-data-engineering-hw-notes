@@ -296,6 +296,11 @@ GROUP BY z."Zone"
 ORDER BY loc_total DESC 
 LIMIT 3;
 ```
+- East Harlem North: 18686.680000000088
+- East Harlem South: 16797.26000000006
+- Morningside Heights: 13029.79000000003
+
+
 East Harlem North, East Harlem South, Morningside Heights
 
 
