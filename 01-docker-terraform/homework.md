@@ -267,7 +267,9 @@ FROM green_taxi_trips;
 - 91.56
 
 - longest_trip_2019-10-31
-- 515.89 
+- 515.89
+
+**ANSWER**: 2019-10-31
 
 
 
