@@ -329,7 +329,8 @@ WHERE gtt.lpep_pickup_datetime LIKE '2019-10%' AND PU_zone."Zone"='East Harlem N
 ORDER BY tip_amount DESC
 LIMIT 1;
 ```
-JFK Airport
+
+**JFK Airport**: 87.3
 
 
 ## Terraform
