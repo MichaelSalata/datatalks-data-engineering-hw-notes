@@ -321,6 +321,18 @@ We need the name of the zone, not the ID.
 - East Harlem North
 - East Harlem South
 
+### ANSWER
+```
+SELECT tip_amount, DO_zone."Zone" AS drop_off_loc
+FROM green_taxi_trips gtt
+INNER JOIN zones DO_zone ON gtt."DOLocationID" = DO_zone."LocationID"
+INNER JOIN zones PU_zone ON gtt."PULocationID" = PU_zone."LocationID"
+WHERE gtt.lpep_pickup_datetime LIKE '2019-10%' AND PU_zone."Zone"='East Harlem North'
+ORDER BY tip_amount DESC
+LIMIT 1;
+```
+JFK Airport
+
 
 ## Terraform
 
@@ -347,6 +359,8 @@ Answers:
 - terraform init, terraform apply -auto-aprove, terraform destroy
 - terraform import, terraform apply -y, terraform rm
 
+### ANSWER
+- terraform init, terraform apply -auto-aprove, terraform destroy
 
 ## Submitting the solutions
 
