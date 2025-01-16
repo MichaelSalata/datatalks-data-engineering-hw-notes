@@ -258,14 +258,17 @@ FROM green_taxi_trips;
 ```
 
 - longest_trip_2019-10-11
-- longest_trip_2019-10-24
-- longest_trip_2019-10-26
-- longest_trip_2019-10-31
-
 - 95.78
+
+- longest_trip_2019-10-24
 - 90.75
+
+- longest_trip_2019-10-26
 - 91.56
+
+- longest_trip_2019-10-31
 - 515.89 
+
 
 
 ## Question 5. Three biggest pickup zones
