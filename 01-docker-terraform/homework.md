@@ -9,6 +9,7 @@ What's the version of pip in the image?
 - 23.3.1
 - 23.2.1
 
+### ANSWER
 TERMINAL
 ```
 michael@michael-desktop:~$ docker run -it --entrypoint bash python:3.12.8
@@ -26,7 +27,7 @@ Status: Downloaded newer image for python:3.12.8
 root@12620eea5490:/# pip --version
 pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
 ```
-### ANSWER
+
 24.3.1
 
 ## Question 2. Understanding Docker networking and docker-compose
@@ -229,21 +230,9 @@ SELECT
 	COUNT(*) FILTER(WHERE trip_distance > 10.0) as "more_than_10_miles"
 FROM green_taxi_trips;
 ```
-less_than_1_mile
-104838
+- less_than_1_mile; 1-3_miles; 3-7_mile; 7-10_miles; more_than_10_miles
 
-1-3_miles
-199013
-
-3-7_miles
-109645
-
-7-10_miles
-27688
-
-more_than_10_miles
-35202
-
+- 104,838;  199,013;  109,645;  27,688;  35,202
 
 ## Question 4. Longest trip for each day
 
@@ -267,17 +256,16 @@ SELECT
 	MAX(trip_distance) FILTER(WHERE lpep_pickup_datetime LIKE '2019-10-31%' ) as "longest_trip_2019-10-31"
 FROM green_taxi_trips;
 ```
-longest_trip_2019-10-11
-95.78
 
-longest_trip_2019-10-24
-90.75
+- longest_trip_2019-10-11
+- longest_trip_2019-10-24
+- longest_trip_2019-10-26
+- longest_trip_2019-10-31
 
-longest_trip_2019-10-26
-91.56
-
-longest_trip_2019-10-31
-515.89 
+- 95.78
+- 90.75
+- 91.56
+- 515.89 
 
 
 ## Question 5. Three biggest pickup zones
