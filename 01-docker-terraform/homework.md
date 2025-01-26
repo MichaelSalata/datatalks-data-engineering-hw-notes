@@ -11,7 +11,7 @@ What's the version of pip in the image?
 
 ### ANSWER
 TERMINAL
-```
+```bash
 michael@michael-desktop:~$ docker run -it --entrypoint bash python:3.12.8
 Unable to find image 'python:3.12.8' locally
 3.12.8: Pulling from library/python
@@ -106,7 +106,7 @@ python3 ingest_data3.py \
     --url="wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz"
 
 TERMINAL
-```
+```bash
 michael@michael-desktop:~/Documents/projects/docker_sql_tinkering/dockerizing_ingest$ python3 ingest_data3.py \
     --user=root \
     --password=root \
@@ -160,7 +160,7 @@ you want to use Jupyter or a python script.
 
 
 COMMAND
-```
+```bash
 python3 ingest_data3.py \
     --user=root \
     --password=root \
@@ -172,7 +172,7 @@ python3 ingest_data3.py \
 ```
 
 TERMINAL
-```
+```bash
 michael@michael-desktop:~/Documents/projects/docker_sql_tinkering/dockerizing_ingest$ python3 ingest_data3.py \
     --user=root \
     --password=root \
@@ -221,7 +221,7 @@ Answers:
 - 104,838;  199,013;  109,645;  27,688;  35,202
 
 ### ANSWER
-```
+```SQL
 SELECT
 	COUNT(*) FILTER(WHERE trip_distance <= 1.0) as "less_than_1_mile",
 	COUNT(*) FILTER(WHERE trip_distance > 1.0 AND trip_distance <= 3.0) as "1-3_miles",
@@ -248,7 +248,7 @@ Tip: For every day, we only care about one single trip with the longest distance
 
 ### ANSWER
 
-```
+```sql
 SELECT
 	MAX(trip_distance) FILTER(WHERE lpep_pickup_datetime LIKE '2019-10-11%' ) as "longest_trip_2019-10-11",
 	MAX(trip_distance) FILTER(WHERE lpep_pickup_datetime LIKE '2019-10-24%' ) as "longest_trip_2019-10-24",
@@ -287,7 +287,7 @@ Consider only `lpep_pickup_datetime` when filtering by date.
 
 
 ### ANSWER
-```
+```sql
 SELECT z."Zone" as location, SUM(total_amount) as loc_total
 FROM green_taxi_trips gtt
 INNER JOIN zones z ON gtt."PULocationID" = z."LocationID"
@@ -320,7 +320,7 @@ We need the name of the zone, not the ID.
 - East Harlem South
 
 ### ANSWER
-```
+```sql
 SELECT tip_amount, DO_zone."Zone" AS drop_off_loc
 FROM green_taxi_trips gtt
 INNER JOIN zones DO_zone ON gtt."DOLocationID" = DO_zone."LocationID"

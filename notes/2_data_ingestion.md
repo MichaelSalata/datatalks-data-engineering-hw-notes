@@ -6,8 +6,78 @@ tags:
 *updated*: `$= dv.current().file.mtime`
 
 
+# [Running Airflow in Docker](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html)
+- ensure at least 4GB memory can be allocated to Docker
+```bash
+docker run --rm "debian:bookworm-slim" bash -c 'numfmt --to iec $(echo $(($(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE))))'
+```
+- download docker-compose.yaml for airflow
+
+```bash
+curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.10.4/docker-compose.yaml'
+```
+
+* set the user ID to the environment
+```bash
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+```
 
 
+```bash
+mkdir -p ./dags ./logs ./plugins ./config
+```
+
+
+# Create a custom Dockerfile/image of Airflow
+/home/michael/Documents/projects/airflow-tinkering/airflow-gcp/airflow.Dockerfile
+
+change to the latest airflow image
+```sql
+FROM apache/airflow:2.10.4
+```
+
+switch to root user near the top for cur & GCP SDK installs
+```sql
+USER root
+```
+
+use the latest Google Cloud SDK
+```Dockerfile
+# Install Google Cloud SDK
+ARG CLOUD_SDK_VERSION=480.0.0
+ENV GCLOUD_HOME=/opt/google-cloud-sdk
+ENV PATH="${GCLOUD_HOME}/bin/:${PATH}"
+
+RUN DOWNLOAD_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz" \
+&& TMP_DIR="$(mktemp -d)" \
+&& curl -fL "${DOWNLOAD_URL}" --output "${TMP_DIR}/google-cloud-sdk.tar.gz" \
+&& mkdir -p "${GCLOUD_HOME}" \
+&& tar xzf "${TMP_DIR}/google-cloud-sdk.tar.gz" -C "${GCLOUD_HOME}" --strip-components=1 \
+&& "${GCLOUD_HOME}/install.sh" \
+--bash-completion=false \
+--path-update=false \
+--usage-reporting=false \
+--quiet \
+&& rm -rf "${TMP_DIR}" \
+&& gcloud --version
+```
+
+near the end switch to user airflow for some pip installs
+```Dockerfile
+# Switch to airflow user before installing pip dependencies
+USER airflow
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Set the working directory
+WORKDIR $AIRFLOW_HOME
+
+# Switch back to the airflow user
+USER $AIRFLOW_UID
+```
+
+
+docker compose build # I think?
 # data_ingestion_local.py  with  Airflow
 
 
