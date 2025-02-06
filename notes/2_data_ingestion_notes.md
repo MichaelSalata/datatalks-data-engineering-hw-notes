@@ -2,16 +2,26 @@
 created: 2025-01-22
 tags:
   - project/open
+  - DE
 ---
 *updated*: `$= dv.current().file.mtime`
+# GOAL - what is this?
+* these are modifications to the instructions 2022 data workflow module to ingest data into GCP using airflow
+* **original instructions** are DataTalks DE Zoomcamp:  [data-engineering-zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main)  / [cohorts](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/cohorts)   /[2022](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/cohorts/2022)  / [week_2_data_ingestion](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/cohorts/2022/week_2_data_ingestion)
 
+---
+
+```bash
+mkdir -p ./dags ./logs ./plugins ./config
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+```
 
 # [Running Airflow in Docker](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html)
 - ensure at least 4GB memory can be allocated to Docker
 ```bash
 docker run --rm "debian:bookworm-slim" bash -c 'numfmt --to iec $(echo $(($(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE))))'
 ```
-- download docker-compose.yaml for airflow
+- download `docker-compose.yaml` for airflow
 
 ```bash
 curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.10.4/docker-compose.yaml'
@@ -22,13 +32,11 @@ curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.10.4/docker-compose.
 echo -e "AIRFLOW_UID=$(id -u)" > .env
 ```
 
-
 ```bash
 mkdir -p ./dags ./logs ./plugins ./config
 ```
 
-
-# Create a custom Dockerfile/image of Airflow
+# Create Custom Dockerfile/image of Airflow
 /home/michael/Documents/projects/airflow-tinkering/airflow-gcp/airflow.Dockerfile
 
 change to the latest airflow image
@@ -76,18 +84,28 @@ WORKDIR $AIRFLOW_HOME
 USER $AIRFLOW_UID
 ```
 
+# Execution
+1. Build the image. It may take several minutes You only need to do this the first time you run Airflow or if you modified the Dockerfile or the `requirements.txt` file.
+    ```bash
+    docker-compose build
+    ```
+2. Initialize configs:
+    ```bash
+    docker-compose up airflow-init
+    ```
+3. Run Airflow
+    ```bash
+    docker-compose up -d
+    ```
+
 
 docker compose build # I think?
 # data_ingestion_local.py  with  Airflow
-
-
 ## managing environment variables
-
 volumes:
 ```yaml
 - ~/.gcp/:/.google/credentials:ro
 ```
-
 
 1. Define your variables inside `.env` file
     ```
